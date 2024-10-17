@@ -3,6 +3,7 @@ package com.scm.entities;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
@@ -38,8 +39,9 @@ public class User {
   private String phoneNumber;
   private boolean enabled = false;
   private boolean emailVerified = false;
-  @Enumerated
   private boolean phoneVerified = false;
+
+  @Enumerated(value = EnumType.STRING)
   private Provider provider = Provider.SELF;
   private String providerUserId;
 

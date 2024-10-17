@@ -9,7 +9,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.scm.entities.User;
 import com.scm.forms.UserForms;
+import com.scm.helper.MessageType;
+import com.scm.helper.Messages;
 import com.scm.services.UserService;
+
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class pagecontroller {
@@ -65,16 +69,26 @@ public class pagecontroller {
   }
 
   @RequestMapping(value = "do-register", method = RequestMethod.POST)
-  public String processRegister(@ModelAttribute UserForms userform) {
-    User user = User.builder()
-        .name(userform.getName())
-        .email(userform.getEmail())
-        .about(userform.getAbout())
-        .password(userform.getPassword())
-        .phoneNumber(userform.getPhonenumber())
-        .profilePic("https://images.app.goo.gl/v2HFayVrDX5UEQLA9")
-        .build();
+  public String processRegister(@ModelAttribute UserForms userform, HttpSession session) {
+    // User user = User.builder()
+    // .name(userform.getName())
+    // .email(userform.getEmail())
+    // .about(userform.getAbout())
+    // .password(userform.getPassword())
+    // .phoneNumber(userform.getPhonenumber())
+    // .profilePic("https://images.app.goo.gl/v2HFayVrDX5UEQLA9")
+    // .build();
+    User user = new User();
+    user.setName(userform.getName());
+    user.setEmail(userform.getEmail());
+    user.setPassword(userform.getPassword());
+    user.setAbout(userform.getAbout());
+    user.setPhoneNumber(userform.getPhonenumber());
+    user.setEnabled(true);
+    user.setProfilePic("https://images.app.goo.gl/v2HFayVrDX5UEQLA9");
     User savedUser = userService.saveUser(user);
+    Messages message = Messages.builder().content("Registration Successful").type(MessageType.green).build();
+    session.setAttribute("message", message);
     return "redirect:/register";
   }
 }
