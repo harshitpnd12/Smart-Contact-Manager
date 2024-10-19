@@ -29,6 +29,7 @@
               method="post"
               data-th-object="${userform}"
               class="mt-5"
+              novalidate
             >
               <!-- name -->
               <div class="mb-2">
@@ -45,7 +46,14 @@
                   placeholder="Enter your Name"
                   required
                 />
+
+                <p
+                  th:if="${#fields.hasErrors('name')}"
+                  th:errors="*{name}"
+                  class="text-red-600 py-2 px-1"
+                ></p>
               </div>
+
               <!-- Email -->
               <div class="mb-2">
                 <label
@@ -61,6 +69,11 @@
                   placeholder="name@flowbite.com"
                   required
                 />
+                <p
+                  th:if="${#fields.hasErrors('email')}"
+                  th:errors="*{email}"
+                  class="text-red-600 py-2 px-1"
+                ></p>
               </div>
               <!-- password -->
               <div class="mb-2">
@@ -76,6 +89,11 @@
                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   required
                 />
+                <p
+                  th:if="${#fields.hasErrors('password')}"
+                  th:errors="*{password}"
+                  class="text-red-600 py-2 px-1"
+                ></p>
               </div>
               <div class="mb-2">
                 <label
@@ -88,9 +106,14 @@
                   id="phone"
                   data-th-field="*{phonenumber}"
                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  placeholder="name@flowbite.com"
+                  placeholder="Enter your Phone Number"
                   required
                 />
+                <p
+                  th:if="${#fields.hasErrors('phonenumber')}"
+                  th:errors="*{phonenumber}"
+                  class="text-red-600 py-2 px-1"
+                ></p>
               </div>
               <!-- about  -->
               <div class="mb-2">
@@ -106,11 +129,16 @@
                   class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   placeholder="Write here..."
                 ></textarea>
+                <p
+                  th:if="${#fields.hasErrors('about')}"
+                  th:errors="*{about}"
+                  class="text-red-600 py-2 px-1"
+                ></p>
               </div>
               <div class="mb-3 flex justify-center space-x-3">
                 <button
                   type="submit"
-                  class="px-3 py-2 rounded bg-gray-800 hover:bg-gray text-white dark:bg-blue-800 dark:hover:bg-blue-800"
+                  class="px-3 py-2 rounded bg-gray-800 hover:bg-gray-700 text-white dark:bg-blue-800 dark:hover:bg-blue-800"
                 >
                   Signup
                 </button>

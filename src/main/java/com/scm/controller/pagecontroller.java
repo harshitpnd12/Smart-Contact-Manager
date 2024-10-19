@@ -3,20 +3,22 @@ package com.scm.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.scm.entities.User;
-import com.scm.forms.UserForms;
+import com.scm.forms.UserForm;
 import com.scm.helper.MessageType;
 import com.scm.helper.Messages;
 import com.scm.services.UserService;
 
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 
 @Controller
-public class pagecontroller {
+public class PageController {
 
   @Autowired
   private UserService userService;
@@ -57,7 +59,7 @@ public class pagecontroller {
 
   @RequestMapping("/register")
   public String register(Model model) {
-    UserForms userform = new UserForms();
+    UserForm userform = new UserForm();
     // by default
     // userform.setName("Harshit");
     // userform.setAbout("Hii");
@@ -68,8 +70,14 @@ public class pagecontroller {
     return "register";
   }
 
-  @RequestMapping(value = "do-register", method = RequestMethod.POST)
-  public String processRegister(@ModelAttribute UserForms userform, HttpSession session) {
+  @RequestMapping(value = "/do-register", method = RequestMethod.POST)
+  public String processRegister(@Valid @ModelAttribute("userform") UserForm userform, BindingResult rBindingResult,
+      HttpSession session) {
+
+    if (rBindingResult.hasErrors()) {
+      return "register";
+    }
+
     // User user = User.builder()
     // .name(userform.getName())
     // .email(userform.getEmail())
@@ -78,6 +86,7 @@ public class pagecontroller {
     // .phoneNumber(userform.getPhonenumber())
     // .profilePic("https://images.app.goo.gl/v2HFayVrDX5UEQLA9")
     // .build();
+
     User user = new User();
     user.setName(userform.getName());
     user.setEmail(userform.getEmail());
